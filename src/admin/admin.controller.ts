@@ -1,3 +1,4 @@
+import { isActiveGuard } from './../guard/isActive.guard';
 import { Controller, Get, Post, Body, Patch, Param, Delete, Res, UseGuards } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { CreateAdminDto } from './dto/create-admin.dto';
@@ -7,13 +8,18 @@ import {Response} from 'express'
 import { CookieGetter } from '../Decorator/cookieGetter.decoartor';
 import { isAuthGuard } from '../guard/isAuth.guard';
 import { isCreatorGuard } from '../guard/isCreator.guard';
+import { UpdatePasswordDto } from './dto/update_password-admin.dto';
 
 @Controller('admin')
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
-
-  // @Post('updatepassword')
-  // update
+  
+  @UseGuards(isActiveGuard)
+  @UseGuards(isAuthGuard)
+  @Patch('updatepassword/:id')
+  updatePass(@Param('id') id: string,@Body() updatePasswordDto: UpdatePasswordDto) {
+    return this.adminService.updatePass(id, updatePasswordDto)
+  }
 
   @UseGuards(isCreatorGuard)
   @UseGuards(isAuthGuard)

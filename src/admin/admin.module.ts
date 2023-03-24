@@ -8,6 +8,7 @@ import { JwtModule } from '@nestjs/jwt';
 @Module({
   imports: [MongooseModule.forFeature([{ name: Admin.name, schema: AdminSchema }]),JwtModule.register({})],
   controllers: [AdminController],
-  providers: [AdminService]
+  providers: [AdminService],
+  // exports: [JwtModule]
 })
 export class AdminModule {}

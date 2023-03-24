@@ -1,3 +1,4 @@
+import { JwtModule } from '@nestjs/jwt';
 
 import { Module } from '@nestjs/common';
 import { CurrencyTypeService } from './currency_type.service';
@@ -6,7 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { CurrencyType, CurrencyTypeSchema } from './schemas/currency_type.schema';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: CurrencyType.name, schema: CurrencyTypeSchema }])],
+  imports: [MongooseModule.forFeature([{ name: CurrencyType.name, schema: CurrencyTypeSchema }]),JwtModule.register({})],
   controllers: [CurrencyTypeController],
   providers: [CurrencyTypeService]
 })

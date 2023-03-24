@@ -6,8 +6,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class isAuthGuard implements CanActivate {
-    constructor(private readonly jwtSarvice: JwtService,
-        private readonly adminService: AdminService) {}
+    constructor(private readonly jwtSarvice: JwtService) {}
 
  async canActivate(context: ExecutionContext)/*: boolean | Promise<boolean> | Observable<boolean> */{
             const req = context.switchToHttp().getRequest();

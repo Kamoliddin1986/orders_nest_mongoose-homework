@@ -3,9 +3,10 @@ import { Module } from '@nestjs/common';
 import { StatusService } from './status.service';
 import { StatusController } from './status.controller';
 import { Status, StatusSchema } from './schemas/status.schema';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-  imports:[MongooseModule.forFeature([{name: Status.name, schema:StatusSchema }])],
+  imports:[MongooseModule.forFeature([{name: Status.name, schema:StatusSchema }]),JwtModule.register({})],
   controllers: [StatusController],
   providers: [StatusService]
 })

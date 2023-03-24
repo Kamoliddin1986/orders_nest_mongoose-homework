@@ -14,6 +14,7 @@ export class isActiveGuard implements CanActivate {
         context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean>{
             const req = context.switchToHttp().getRequest();
 
+            console.log('Guard>>>>>',req.admin.is_active);
             
            if(!req.admin.is_active){
             throw new ForbiddenException({

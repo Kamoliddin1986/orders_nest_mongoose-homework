@@ -18,8 +18,8 @@ import { JwtModule } from '@nestjs/jwt';
   CurrencyTypeModule,
   OrderModule,
   StatusModule,
-  OperationModule,JwtModule],
+  OperationModule],
   controllers: [],
-  providers: [JwtModule],
+  providers: [],
 })
 export class AppModule {}

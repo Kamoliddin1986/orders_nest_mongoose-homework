@@ -9,10 +9,29 @@ import { InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from "bcrypt"
 import { JwtService } from '@nestjs/jwt';
 import {Response} from 'express'
+import { UpdatePasswordDto } from './dto/update_password-admin.dto';
 @Injectable()
 export class AdminService {
   constructor(@InjectModel(Admin.name) private adminModel: Model<AdminDocument>,
   private readonly jwtService: JwtService) {}
+
+  async updatePass(id: string, updatePasswordDto: UpdatePasswordDto){
+    const {old_password,new_password,confirm_password} = updatePasswordDto
+
+    
+    const admin = await this.findOneById(id)
+    
+    const isPassTrue = await bcrypt.compare(old_password,admin.hashed_password)
+    if(!isPassTrue){
+      throw new BadRequestException('eski parol notugri')
+    }
+    
+    if(new_password !== confirm_password){
+      throw new BadRequestException('Parolni birxil kiriting')
+    }
+    const newHashedPass = await bcrypt.hash(new_password,7)
+    return this.adminModel.findByIdAndUpdate(id,{hashed_password: newHashedPass}, {new: true}).exec()
+  }
 
 
   async create(createAdminDto: CreateAdminDto): Promise<Admin> {
